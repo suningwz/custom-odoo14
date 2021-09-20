@@ -5,7 +5,7 @@
     "author" : "BHECO SERVICES",
     "website" : "www.bhecoservices.com",
     "category" : "HR",
-    "depends" : ["base", "hr", "hr_contract","hr_holidays","account","account_fiscal_period"],
+    "depends" : ["base", "hr", "hr_contract", "hr_holidays", "account"],
     "description": u"""
     Gestion de la paie
     Le but de ce module est la gestion de la paie marocaine:
