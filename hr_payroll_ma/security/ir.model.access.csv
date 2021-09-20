@@ -1,0 +1,16 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_hr_payroll_ma","hr.payroll_ma","model_hr_payroll_ma","group_hr_payroll",1,1,1,1
+"access_hr_payroll_ma_bulletin","hr.payroll_ma.bulletin","model_hr_payroll_ma_bulletin","group_hr_payroll",1,1,1,1
+"access_hr_payroll_ma_parametres","hr.payroll_ma.parametres","model_hr_payroll_ma_parametres","group_hr_payroll",1,1,1,1
+"access_hr_payroll_ma_ir","hr.payroll_ma.ir","model_hr_payroll_ma_ir","group_hr_payroll",1,1,1,1
+"access_hr_payroll_ma_anciennete","hr.payroll_ma.anciennete","model_hr_payroll_ma_anciennete","group_hr_payroll",1,1,1,1
+"access_hr_payroll_ma_cotisation","hr.payroll_ma.cotisation","model_hr_payroll_ma_cotisation","group_hr_payroll",1,1,1,1
+"access_hr_payroll_ma_cotisation_type","hr.payroll_ma.cotisation.type","model_hr_payroll_ma_cotisation_type","group_hr_payroll",1,1,1,1
+"access_hr_payroll_ma_rubrique","hr.payroll_ma.rubrique","model_hr_payroll_ma_rubrique","group_hr_payroll",1,1,1,1
+"access_hr_payroll_ma_bulletin_line","hr.payroll_ma.bulletin.line","model_hr_payroll_ma_bulletin_line","group_hr_payroll",1,1,1,1
+"access_hr_payroll_ma_ligne_rubrique","hr.payroll_ma.ligne_rubrique","model_hr_payroll_ma_ligne_rubrique","group_hr_payroll",1,1,1,1
+"access_hr_payroll_ma_imposition_rubrique","hr.payroll_ma.imposition_rubrique","model_hr_payroll_ma_imposition_rubrique","group_hr_payroll",1,1,1,1
+"access_hr_payroll_variable","hr.payroll.variable","model_hr_payroll_variable","group_hr_payroll",1,1,1,1
+"access_hr_payroll_variable_line","hr.payroll.variable.line","model_hr_payroll_variable_line","group_hr_payroll",1,1,1,1
+"access_hr_payroll_loan","hr.payroll.loan","model_hr_payroll_loan","group_hr_payroll",1,1,1,1
+"access_hr_payroll_loan_line","hr.payroll.loan.line","model_hr_payroll_loan_line","group_hr_payroll",1,1,1,1

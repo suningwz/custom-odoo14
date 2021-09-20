@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<menuitem id="menu_hr_root_payroll_ma" parent="menu_ressources_humaines_root"
+			name="Gestion de la paie" />
+
+		<record id="hr_payroll_ma_form" model="ir.ui.view">
+			<field name="name">hr.payroll_ma.form</field>
+			<field name="model">hr.payroll_ma</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Bulletin de la paie">
+					<header>
+						<button name="draft_cb" string="_Draft" type="object"
+							states="confirmed,cancelled" icon="fa-eraser" />
+						<button name="confirm_cb" string="_Confirm" type="object"
+							states="draft" icon="fa-check-circle" />
+						<button name="cancel_cb" string="_Cancel" type="object"
+							states="draft" />
+						<button name="generate_employees" string="Ajouter Employés"
+							type="object" attrs="{'invisible':[('state','!=','draft')]}" />
+						<button name="compute_all_lines" string="Calculer bulletins"
+							type="object" attrs="{'invisible':[('state','!=','draft')]}" />
+						<field name="state" widget="statusbar" statusbar_visible="draft,confirmed"
+							statusbar_colors='{"confirmed":"blue"}' />
+					</header>
+					<group colspan="4" col="6">
+						<field name="number" />
+						<field name="journal_id" />
+						<field name="currency_id" />
+						<field name="company_id"/>
+						<field name="date_salary" />
+						<field name="period_id" />
+						<field name="date_start" />
+						<field name="date_end" />
+						<field name="move_id" />
+					</group>
+					<group>
+						<field name="name" />
+					</group>
+					<notebook>
+						<page string="Salaires">
+							<field colspan="4" default_get="{'bulletin_line_ids': bulletin_line_ids}"
+								name="bulletin_line_ids" nolabel="1" widget="one2many_list">
+								<form string="salary">
+									<group colspan="4" col="6">
+										<field name="employee_id" domain="[('active', '=',True)]" />
+										<field name="employee_contract_id" />
+										<field name="name" />
+										<field name="working_days" />
+										<field name="salaire_base" />
+
+									</group>
+									<notebook colspan="4">
+										<page string="salary">
+											<field colspan="4" name="salary_line_ids" nolabel="1"
+												widget="one2many_list" />
+											<group colspan="4" col="6">
+												<field name="salaire_brute" />
+												<field name="salaire_brute_imposable" />
+												<field name="salaire_brute_imposable_ir" />
+												<field name="salaire_net_imposable" />
+												<field name="cotisations_employee" />
+												<field name="cotisations_employer" />
+												<field name="salaire_net" />
+												<field name="salaire_net_a_payer" />
+
+											</group>
+
+											<group string="Cumuls">
+												<group>
+													<field name="cumul_work_days" />
+													<field name="cumul_sb" />
+													<field name="cumul_sbi" />
+													<field name="cumul_sbir" />
+													<field name="cumul_sni" />
+													<field name="cumul_sni_n_1" />
+													<field name="cumul_avn" />
+												</group>
+												<group>
+													<field name="cumul_ee_cotis" />
+													<field name="cumul_er_cotis" />
+													<field name="cumul_igr" />
+													<field name="cumul_fp" />
+													<field name="cumul_indemnites_fp" />
+													<field name="cumul_exo" />
+
+												</group>
+
+											</group>
+
+											<group>
+												<field name="salaire_net_a_payer_text" />
+											</group>
+											<group>
+
+
+											</group>
+										</page>
+										<page string="Info Salaire">
+											<group>
+												<field name="hour_base" />
+												<field name="normal_hours" />
+											</group>
+											<separator string="Info sur salaire" colspan="4" />
+											<group>
+												<field name="igr" />
+												<field name="deduction" />
+												<field name="period_id" invisible="0" />
+											</group>
+										</page>
+									</notebook>
+								</form>
+								<tree string="Bulletins">
+									<field name="name" select="1" />
+									<field name="employee_id" />
+									<field name="working_days" sum="total_0" />
+									<field name="salaire_brute" sum="total_1" />
+									<field name="salaire_brute_imposable" sum="total_2" />
+									<field name="cotisations_employee" sum="total_3" />
+									<field name="cotisations_employer" sum="total_4" />
+									<field name="salaire_net" sum="total_5" />
+									<field name="salaire_net_a_payer" sum="total_6" />
+								</tree>
+							</field>
+
+							<group col="5" colspan="4">
+
+
+							</group>
+						</page>
+						
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="hr_payroll_ma_tree" model="ir.ui.view">
+			<field name="name">hr.payroll_ma.tree</field>
+			<field name="model">hr.payroll_ma</field>
+			<field name="arch" type="xml">
+				<tree decoration-info="state=='draft'" string="Saisie mensuelle">
+					<field name="name" select='1' />
+					<field name="number" select='1' />
+					<field name="period_id" select='1' />
+					<field name="date_salary" />
+					<field name="state" select='1' />
+				</tree>
+			</field>
+		</record>
+
+		<record id="payroll_ma_all_act" model="ir.actions.act_window" >
+			<field name="name">Saisie Mensuelle</field>
+			<field name="res_model">hr.payroll_ma</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem action="payroll_ma_all_act" id="menu_hr_payroll_ma"
+			parent="menu_hr_root_payroll_ma" />
+
+		<record id="salary_tree" model="ir.ui.view">
+			<field name="name">hr.payroll_ma.bulletin.tree</field>
+			<field name="model">hr.payroll_ma.bulletin</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Salaire">
+					<field name="name" />
+					<field name="employee_id" />
+					<field name="period_id" />
+					<field name="working_days" />
+					<field name="normal_hours" />
+					<field name="salaire_brute" />
+					<field name="salaire_brute_imposable" />
+					<field name="cotisations_employee" />
+					<field name="cotisations_employer" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="salary_form" model="ir.ui.view">
+			<field name="name">hr.payroll_ma.bulletin.form</field>
+			<field name="model">hr.payroll_ma.bulletin</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="salary">
+					<group colspan="4" col="6">
+						<field name="employee_id" domain="[('active', '=',True)]" />
+						<field name="employee_contract_id" domain="[('employee_id', '=',employee_id)]" />
+						<field name="name" />
+						<field name="working_days" />
+						<field name="salaire_base" />
+						<button name="compute_all_lines" string="Calculer bulletin"
+							type="object" icon="fa-exchange" />
+					</group>
+					<notebook colspan="4">
+						<page string="salary">
+							<field colspan="4" name="salary_line_ids" nolabel="1"
+								widget="one2many_list" />
+							<group colspan="4" col="6">
+								<field name="salaire_brute" />
+								<field name="salaire_brute_imposable" />
+								<field name="salaire_brute_imposable_ir" />
+								<field name="salaire_net" />
+								<field name="salaire_net_imposable" />
+								<field name="cotisations_employee" />
+								<field name="cotisations_employer" />
+								<field name="salaire_net_a_payer" />
+
+								<field name="cumul_work_days" />
+								<field name="cumul_sb" />
+								<field name="cumul_sbi" />
+								<field name="cumul_sbir" />
+								<field name="cumul_sni" />
+								<field name="cumul_avn" />
+								<field name="cumul_igr" />
+								<field name="cumul_ee_cotis" />
+								<field name="cumul_er_cotis" />
+								<field name="cumul_fp" />
+								<field name="cumul_indemnites_fp" />
+								<field name="cumul_exo" />
+							</group>
+							<group>
+								<field name="salaire_net_a_payer_text" />
+							</group>
+						</page>
+						
+						<page string="Info Salaire">
+							<group>
+								<field name="hour_base" />
+								<field name="normal_hours" />
+							</group>
+							<group>
+								<separator string="Info sur salaire" colspan="4" />
+								<field name="igr" />
+								<field name="deduction" />
+								<field name="period_id" />
+							</group>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_salary_tree" model="ir.actions.act_window">
+			<field name="name">Bulletins de paie</field>
+			<field name="res_model">hr.payroll_ma.bulletin</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem action="action_salary_tree" id="menu_bulletin"
+			parent="menu_hr_root_payroll_ma" />
+
+		<!-- Lignes Bulletins de paie ######################## -->
+		<record id="view_salary_line_tree" model="ir.ui.view">
+			<field name="name">hr.payroll_ma.bulletin.line.tree</field>
+			<field name="model">hr.payroll_ma.bulletin.line</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Ligne de salaire">
+					<field name="name" />
+					<field name="base" />
+					<field name="rate_employee" />
+					<field name="subtotal_employee" />
+					<field name="rate_employer" />
+					<field name="subtotal_employer" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_salary_line_form" model="ir.ui.view">
+			<field name="name">hr.payroll_ma.bulletin.line.form</field>
+			<field name="model">hr.payroll_ma.bulletin.line</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Ligne de salaire">
+					<notebook>
+						<page string="Line">
+							<group>
+								<field name="name" />
+								<field name="base" />
+								<field name="type" />
+								<field name="deductible" />
+								<field name="credit_account_id" string="compte de crédit" />
+								<field name="debit_account_id" string="compte de débit" />
+								<newline />
+								<field name="rate_employee" />
+								<field name="subtotal_employee" />
+								<field name="rate_employer" />
+								<field name="subtotal_employer" />
+							</group>
+						</page>
+						<page string="Notes">
+							<field colspan="4" name="note" nolabel="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<!-- ################################Les rubriques#######################################" -->
+
+		<record model="ir.ui.view" id="rubrique_form">
+			<field name="name">hr.payroll_ma.rubrique.form</field>
+			<field name="model">hr.payroll_ma.rubrique</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Rubriques">
+					<group>
+						<field name="name" />
+						<field name="categorie" />
+						<field name="afficher" />
+						<field name="company_id"/>
+					</group>
+					<group attrs="{'invisible':[('categorie','==','deduction')]}">
+						<group string="Type">
+							<field name="type" />
+<!-- 							<field name="imposable" /> -->
+<!-- 							<field name="formule" /> -->
+								<field name="amount_number" widget="radio"/>
+								<field name="coefficient" attrs="{'invisible':[('amount_number','=','amount')]}"/>
+								<field name="day_hour" attrs="{'invisible':[('amount_number','=','amount')]}"/>
+						</group>
+						<group string="Soumise A">
+							<field name="ir" />
+							<field name="anciennete" />
+							<field name="absence" />
+							<field name="reprise" />
+							<field name="conge" />
+						</group>
+					</group>
+					<group string="Plafonds">
+<!-- 						<group string="CNSS"> -->
+<!-- 							<field name="plafond" /> -->
+<!-- 							<field name="formule_plafond_cnss" /> -->
+<!-- 						</group> -->
+						<group string="IR">
+							<field name="plafond_ir" />
+							<field name="formule_plafond_ir" />
+						</group>
+					</group>
+					<group>
+						<field name="credit_account_id" />
+						<field name="debit_account_id" />
+						<field name="sequence" />
+						<field name="note" />
+					</group>
+					<group>
+						<p class="oe_grey">
+							En cas d'absence d'une cotisation dans la liste
+							ci-dessous, Odoo supposera que cette rubrique est exonéré
+						</p>
+					</group>
+					<group>
+						<field name="imposition_ids" nolabel="1"
+							attrs="{'invisible':[('categorie','==','deduction')]}" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="rubrique_tree">
+			<field name="name">hr.payroll_ma.rubrique.tree</field>
+			<field name="model">hr.payroll_ma.rubrique</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Rubriques">
+					<field name="name" />
+					<field name="categorie" />
+					<field name="afficher" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="rubrique_all_act">
+			<field name="name">Rubriques</field>
+			<field name="res_model">hr.payroll_ma.rubrique</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<menuitem action="rubrique_all_act" id="rubrique_all_mi"
+			parent="payroll_ma_configure" />
+
+		<!-- ##################Imposition de rubriques ######################## -->
+		<record model="ir.ui.view" id="imposition_rubrique_form">
+			<field name="name">hr.payroll_ma.imposition.rubrique.form</field>
+			<field name="model">hr.payroll_ma.imposition.rubrique</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="imposition rubriques">
+					<group>
+						<group>
+							<field name="plafonne" />
+							<field name="plafond_mt" />
+							<!-- <field name="plafond_formule"/> -->
+							<field name="imposition_id" />
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="imposition_rubrique_tree">
+			<field name="name">hr.payroll_ma.imposition.rubrique.tree</field>
+			<field name="model">hr.payroll_ma.imposition.rubrique</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree editable="top">
+					<field name="imposition_id" />
+					<field name="plafonne" />
+					<field name="plafond_mt" attrs="{'invisible':[('plafonne','=', False)]}" />
+<!-- 					<field name="plafond_formule" attrs="{'invisible':[('plafonne','=', False)]}" /> -->
+				</tree>
+			</field>
+		</record>
+
+		<!-- ##################Lignes de rubriques ######################## -->
+		<record model="ir.ui.view" id="ligne_rubrique_form">
+			<field name="name">hr.payroll_ma.ligne_rubrique.form</field>
+			<field name="model">hr.payroll_ma.ligne_rubrique</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Lignes rubriques">
+					<group>
+						<group>
+							<field name="rubrique_id" />
+							<field name="montant" />
+							<field name="taux" />
+							<field name="permanent" />
+						</group>
+						<group attrs="{'invisible':[('permanent','==',True)]}">
+							<field name="period_id" />
+							<field name="date_start" />
+							<field name="date_stop" />
+						</group>
+					</group>
+					<separator string="Commentaire" colspan="4" />
+					<field name="note" />
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ligne_rubrique_tree">
+			<field name="name">hr.payroll_ma.ligne_rubrique.tree</field>
+			<field name="model">hr.payroll_ma.ligne_rubrique</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="rubriques">
+					<field name="rubrique_id" />
+					<field name="montant" />
+					<field name="permanent" />
+					<field name="date_start" />
+					<field name="date_stop" />
+					<field name="note" />
+				</tree>
+			</field>
+		</record>
+
+		<act_window name="Mes bulletins de paie" domain="[('employee_id', '=', active_id)]"
+			res_model="hr.payroll_ma.bulletin" binding_model="hr.employee"
+			id="act_hr_employee_bulletin" />
+
+		<act_window name="bulletins de paie" domain="[('id_payroll_ma', '=', active_id)]"
+			binding_model="hr.payroll_ma" res_model="hr.payroll_ma.bulletin" id="act_hr_payroo_ma_bulletin" />
+
+		<act_window name="Ecritures Comptables" res_model="account.move"
+			binding_model="hr.payroll_ma" id="act_hr_payroll_ma_ecriture" />
+	</data>
+</odoo>

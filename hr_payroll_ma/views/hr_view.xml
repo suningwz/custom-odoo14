@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="view_employee_form_leave_inherit_atlas" model="ir.ui.view">
+			<field name="name">hr.employee.leave.form.inherit.atlas</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr_holidays.view_employee_form_leave_inherit" />
+			<field name="arch" type="xml">
+				<field name="leave_manager_id" position="attributes">
+					<attribute name="string">Responsable de l'approbation des congès</attribute>
+				</field>
+			</field>
+		</record>
+
+		<!-- HR contract -->
+		<record model="ir.ui.view" id="view_hr_contract_tree_inherits">
+			<field name="name">hr.contract.view.form.inherits</field>
+			<field name="model">hr.contract</field>
+			<field name="inherit_id" ref="hr_contract.hr_contract_view_tree" />
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<field name="employee_id" position="after">
+					<field name="actif" />
+				</field>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_hr_contract_form_inherits">
+			<field name="name">hr.contract.view.form.inherits</field>
+			<field name="model">hr.contract</field>
+			<field name="inherit_id" ref="hr_contract.hr_contract_view_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<xpath expr="//sheet" position="before">
+					<header>
+						<button string="Clôturer contrat" attrs="{'invisible':[('actif','=',False)]}"
+							type="object" name="cloturer_contrat" class="oe_highlight" />
+						<button string="Activer contrat" attrs="{'invisible':[('actif','=',True)]}"
+							type="object" name="activer_contrat" class="oe_highlight" />
+					</header>
+				</xpath>
+
+				<field name="job_id" position="after">
+					<field name="actif" />
+				</field>
+				<notebook position="inside">
+					<page string="Configuration de la paie">
+						<group>
+							<field name="working_days_per_month" />
+							<field name="hour_salary" />
+							<field name="monthly_hour_number" />
+							<field name="cotisation" />
+							<field name="ir" />
+							<field name="per_patronal" />
+							<field name="per_salarial" />
+							<field name="taxe_solidarite" widget="radio"/>
+							<button name="net_to_brute" string="Net / Brute" type="object"
+								icon="fa-exchange" />
+							<field name="rubrique_ids" colspan="4" nolabel="1" />
+						</group>
+
+					</page>
+				</notebook>
+			</field>
+		</record>
+
+
+		<!-- HR employee -->
+
+		<record id="view_smart_bp_tree" model="ir.ui.view">
+			<field name="name">hr.payroll_ma.bulletin.tree</field>
+			<field name="model">hr.payroll_ma.bulletin</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Salaire">
+					<field name="name" select="1" />
+					<field name="employee_id" select="1" />
+					<field name="period_id" select="1" />
+					<field name="working_days" />
+					<field name="salaire_brute" />
+					<field name="salaire_brute_imposable" />
+					<field name="cotisations_employee" />
+					<field name="cotisations_employer" />
+				</tree>
+			</field>
+		</record>
+
+
+		<!-- <record id="view_payslip_filter" model="ir.ui.view"> -->
+		<!-- <field name="name">Bulletin</field> -->
+		<!-- <field name="model">hr.payroll_ma.bulletin</field> -->
+		<!-- <field name="arch" type="xml"> -->
+		<!-- <search string="Bulletins de paie"> -->
+		<!-- <field name="employee_id"/> -->
+		<!-- <field name="period_id"/> -->
+
+		<!-- <group expand="0" string="Group By"> -->
+
+		<!-- <filter string="Employé" icon="terp-personal" domain="[]" context="{'group_by':'employee_id'}"/> -->
+		<!-- <filter string="Mois" icon="terp-personal" domain="[]" context="{'group_by':'period_id'}"/> -->
+
+		<!-- </group> -->
+		<!-- </search> -->
+		<!-- </field> -->
+		<!-- </record> -->
+
+		<record id="act_hr_employee_2_payslips" model="ir.actions.act_window">
+			<field name="res_model">hr.payroll_ma.bulletin</field>
+			<field name="name">Bulletins de paie</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_smart_bp_tree" />
+			<field name="context">{'search_default_employee_id': [active_id],
+				'default_employee_id': active_id}
+			</field>
+			<field name="domain">[('employee_id','=',active_id)]</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_employee_form_inherits">
+			<field name="name">view.employee.form.inherits</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<field name="identification_id" position="attributes">
+					<attribute name="string">CIN</attribute>
+				</field>
+
+				<field name="name" position="after">
+					<div>
+						<field name="prenom" required="1" />
+					</div>
+				</field>
+				<field name="parent_id" position="after">
+					<field name="analytic_account_id" />
+					<field name="analytic_tag_id" />
+				</field>
+				<notebook position="inside">
+					<page string="Configuration de la paie">
+						<group>
+							<group string="Identifiants">
+								<field name="matricule" />
+								<field name="ssnid" string="CNSS" />
+								<field name="cimr_number" />
+							</group>
+							<group string="Banques">
+								<field name="bank"
+									attrs="{'required':[('mode_reglement','=','virement')],'invisible':[('mode_reglement','!=','virement')]}" />
+								<field name="agence"
+									attrs="{'invisible':[('mode_reglement','!=','virement')]}" />
+								<field name="compte"
+									attrs="{'required':[('mode_reglement','=','virement')],'invisible':[('mode_reglement','!=','virement')]}" />
+							</group>
+						</group>
+						<group string="Autres informations">
+							<group>
+								<field name="date" />
+								<field name="anciennete" />
+								<field name="mode_reglement" />
+								<field name="address" />
+								<field name="phone_home" />
+							</group>
+							<group>
+								<field name="chargefam" />
+								<field name="affilie" />
+								<field name="address_home" />
+							</group>
+						</group>
+					</page>
+					<page string="Prêt logement">
+						<group>
+							<group string="Infos logement">
+								<field name="type_logement" />
+								<field name="superficie_logement" />
+								<field name="prix_acquisition_logement" />
+							</group>
+							<group string="Montant">
+								<field name="logement" />
+							</group>
+						</group>
+					</page>
+				</notebook>
+
+				<xpath expr="//div[@name='button_box']" position="inside">
+					<button name="%(act_hr_employee_2_payslips)d" class="oe_stat_button"
+						icon="fa-money" type="action" groups="base.group_hr_manager">
+						<field name="payslip_count" widget="statinfo" string="Bulletins de Paie" />
+					</button>
+				</xpath>
+
+			</field>
+		</record>
+
+
+
+
+		<menuitem parent="" id="menu_ressources_humaines_root" name="Ressources Humaines"
+			sequence="4" />
+
+		<menuitem parent="menu_ressources_humaines_root" id="hr.menu_human_resources_configuration" />
+		<menuitem parent="menu_ressources_humaines_root" id="hr.menu_hr_root"
+			name="Ressources Humaines" sequence="4" />
+		<menuitem parent="hr.menu_human_resources_configuration" id="menu_job_id"
+			action="hr.action_hr_job" sequence="4" />
+	</data>
+</odoo>
+    
