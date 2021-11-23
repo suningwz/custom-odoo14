@@ -37,8 +37,6 @@
              'views/custom_layouts.xml',
              'views/document_base_layout.xml',
              'reports/custom_invoice_template.xml',
-             'reports/custom_invoice_template_fantacy.xml',
-             'reports/custom_invoice_template_old_standard.xml',
              'reports/default_invoice_template.xml',
              'template_view/default_template_view.xml',
              'template_view/normal_template_view.xml',
