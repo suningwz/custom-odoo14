@@ -323,7 +323,7 @@
                             <table class="table table-condensed">
                                 <tr class="border-black">
                                     <td>
-                                        <strong>Subtotal</strong>
+                                        <strong>Subtotal HT</strong>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="o.amount_untaxed"
@@ -343,7 +343,7 @@
                                 </t>
                                 <tr class="border-black">
                                     <td>
-                                        <strong>Total</strong>
+                                        <strong>Total TTC</strong>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="o.amount_total"

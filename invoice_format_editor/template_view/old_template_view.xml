@@ -185,7 +185,7 @@
                                                 <tr class="border-black o_subtotal"
                                                     style="">
                                                     <td>
-                                                        <strong>Subtotal
+                                                        <strong>Subtotal HT
                                                         </strong>
                                                     </td>
                                                     <td class="text-right">
@@ -212,7 +212,7 @@
                                                 <tr class="border-black o_total"
                                                     t-attf-style=" background-color:#{company.document_layout_id.base_color};padding:2% ;color:#{company.document_layout_id.heading_text_color};">
                                                     <td>
-                                                        <strong>Total</strong>
+                                                        <strong>Total TTC</strong>
                                                     </td>
                                                     <td class="text-right">
                                                         <span class="text-nowrap">

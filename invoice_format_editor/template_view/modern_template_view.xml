@@ -174,7 +174,7 @@
                                             <tr class="border-black o_subtotal"
                                                 style="">
                                                 <td>
-                                                    <strong>Subtotal</strong>
+                                                    <strong>Subtotal HT</strong>
                                                 </td>
                                                 <td class="text-right">
                                                     <span>$
@@ -198,7 +198,7 @@
                                             </tr>
                                             <tr class="border-black o_total">
                                                 <td>
-                                                    <strong>Total</strong>
+                                                    <strong>Total TTC</strong>
                                                 </td>
                                                 <td class="text-right">
                                                     <span class="text-nowrap">$

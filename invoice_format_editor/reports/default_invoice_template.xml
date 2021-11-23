@@ -125,7 +125,7 @@
                             <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ml-auto">
                                 <table class="table table-sm" style="page-break-inside: avoid;">
                                     <tr class="border-black o_subtotal" style="">
-                                        <td><strong>Subtotal</strong></td>
+                                        <td><strong>Subtotal HT</strong></td>
                                         <td class="text-right">
                                             <span t-field="o.amount_untaxed"/>
                                         </td>
