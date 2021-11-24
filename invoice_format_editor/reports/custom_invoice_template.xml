@@ -47,7 +47,7 @@
                             <th scope="col"
                                 t-attf-style=" background-color:#{o.theme_id.base_color};color:#{o.theme_id.heading_text_color};">
                                 <font>
-                                    <strong>Invoice Date</strong>
+                                    <strong>Date de facture</strong>
                                 </font>
                             </th>
                         </span>
@@ -55,7 +55,7 @@
                             <th scope="col"
                                 t-attf-style=" background-color:#{o.theme_id.base_color};color:#{o.theme_id.heading_text_color};">
                                 <font>
-                                    <strong>Due Date</strong>
+                                    <strong>Date d'échéance</strong>
                                 </font>
                             </th>
                         </span>
@@ -63,7 +63,7 @@
                             <th scope="col"
                                 t-attf-style=" background-color:#{o.theme_id.base_color};color:#{o.theme_id.heading_text_color};">
                                 <font>
-                                    <strong>Payment Term</strong>
+                                    <strong>Conditions de paiement</strong>
                                 </font>
                             </th>
                         </span>
@@ -73,7 +73,7 @@
                                 <th scope="col"
                                     t-attf-style=" background-color:#{o.theme_id.base_color};color:#{o.theme_id.heading_text_color};">
                                     <font>
-                                        <strong>SalesPerson</strong>
+                                        <strong>Vendeur</strong>
                                     </font>
                                 </th>
                             </span>
@@ -229,7 +229,7 @@
                             <thead>
                                 <tr>
                                     <th t-attf-style=" background-color:#{o.theme_id.base_color};color:#{o.theme_id.heading_text_color};">
-                                        Product
+                                        Produit
                                     </th>
                                     <span t-if="o.theme_id.description">
                                         <th t-attf-style=" background-color:#{o.theme_id.base_color};color:#{o.theme_id.heading_text_color};">
@@ -244,11 +244,11 @@
                                     </span>
                                     <th class="text-right"
                                         t-attf-style=" background-color:#{o.theme_id.base_color};color:#{o.theme_id.heading_text_color};">
-                                        Quantity
+                                        Quantité
                                     </th>
                                     <th class="text-right"
                                         t-attf-style=" background-color:#{o.theme_id.base_color};color:#{o.theme_id.heading_text_color};">
-                                        Unit Price
+                                        Prix unitaire
                                     </th>
                                     <th t-if="display_discount"
                                         class="text-right"
@@ -263,7 +263,7 @@
                                     </span>
                                     <th class="text-right"
                                         t-attf-style=" background-color:#{o.theme_id.base_color};color:#{o.theme_id.heading_text_color};">
-                                        Price
+                                        Montant
                                     </th>
                                 </tr>
                             </thead>
@@ -323,7 +323,7 @@
                             <table class="table table-condensed">
                                 <tr class="border-black">
                                     <td>
-                                        <strong>Subtotal HT</strong>
+                                        <strong>Sous-total HT</strong>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="o.amount_untaxed"
@@ -365,8 +365,7 @@
                         <br/>
                         <br/>
                         <p t-if="o.move_type in ('out_invoice','in_refund')">
-                            Please use the following communication for your
-                            payment :
+                            Merci d'utiliser la communication suivante pour votre paiement :
                             <b>
                                 <span t-field="o.payment_reference"/>
                             </b>
