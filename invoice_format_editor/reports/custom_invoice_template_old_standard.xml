@@ -217,7 +217,7 @@
                             <table class="table table-condensed">
                                 <tr class="border-black">
                                     <td>
-                                        <strong>Subtotal</strong>
+                                        <strong>Sous-total HT</strong>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="o.amount_untaxed"
@@ -238,7 +238,7 @@
                                 <tr class="border-black"
                                     t-attf-style="background-color:#{o.theme_id.base_color};color:#{o.theme_id.heading_text_color}">
                                     <td>
-                                        <strong>Total</strong>
+                                        <strong>Total TTC</strong>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="o.amount_total"
@@ -247,7 +247,7 @@
                                 </tr>
                                 <tr class="border-black">
                                     <td>
-                                        <strong>Amount Due</strong>
+                                        <strong>Montant dû</strong>
                                     </td>
                                     <td class="text-right">
                                         <span t-field="o.amount_residual"
