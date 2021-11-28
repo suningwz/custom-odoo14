@@ -10461,7 +10461,6 @@ msgid "Secure Sequence"
 msgstr "Séquence Sécurisée"
 
 #. module: account
-#. module: account
 #: code:addons/account/models/account_journal.py:0
 #, python-format
 msgid "Securisation of %s - %s"
