@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="FloatingWhatsAppIcon" name="Floating WhatsApp Icon" inherit_id="website.footer_custom">
+        <xpath expr="//div[@id='connect']" position="after">
+            <t t-if="website.whatsapp_icon_show">
+                <div id="whatsapp_icon_main_div">
+                    <a id="whatsapp_icon_div" t-attf-href="#{website.redirect_whatsapp_url()}" target="_blank"
+                       class="wa_float" title="Chat Us on WhatsApp">
+                        <i class="fa fa-whatsapp my-float"/>
+                    </a>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="auth_signup_address.login" inherit_id="web.login" name="Sign up - Captcha">
+        <xpath expr="//button[@type='submit']" position="replace">
+            <div class="clearfix oe_login_buttons">
+                <button id="loginButton" type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </xpath>
+        <xpath expr="//form[@class='oe_login_form']" position="inside">
+            <div onload="generateCaptcha();"/>
+        </xpath>
+        <xpath expr="//div[@class='form-group field-password']" position="after">
+
+            <script src="/web/static/lib/jquery/jquery.js" type="text/javascript"/>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                //Disable cut copy paste
+                $('body').bind('cut copy paste', function (e) {
+                e.preventDefault();
+                });
+                //Disable mouse right click
+                $("body").on("contextmenu",function(e){
+                return false;
+                });
+                });
+                $(document).mousedown(function(e){
+                if(e.which === 2 || e.which === 3){
+                return false; // Or e.preventDefault()
+                }
+                });
+            </script>
+            <link rel="stylesheet" href="/auth_signup_address/static/src/css/index.css"/>
+
+        </xpath>
+    </template>
+</odoo>
